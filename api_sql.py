@@ -9,7 +9,7 @@ db = MySQLdb.connect(host="localhost",
     user="root",
      passwd="Vendetta7800",      # <--------- vive la discression A metre dans un autre fichier bixon
     db="OpenClassroom")
-#on doit créer un objet curseur??
+
 
 
 
@@ -22,16 +22,16 @@ for row in cur.fetchall():
  
 
 db.close()
-#r = requests.get("https://world.openfoodfacts.org/api/v0/product/3392460511200.json")
+r = requests.get("https://fr.openfoodfacts.org/categories.json")
  
 #r -> json  // result -> dictionnaire
-#result = json.loads(r.text)
+result = json.loads(r.text)
 #req = requests.request('GET', 'https://world.openfoodfacts.org/api/v0/product/3392460511200.json')
 #print(req)
 
-#affiche tout en vrac si décommenté
+#affiche tout en vrac si décommente
 #result1 = result[product][categories_prev_hierarchy]=en:sugary-snacks
-#print(result1)
+print(result)
 #print(result)
  
 
@@ -45,7 +45,7 @@ db.close()
 
 if __name__ == '__main__':
     def __main__():
-        """ Ceci est le main"""
+        """     Ceci est le main"""
         continuer_choix = True
         while continuer_choix:
             print("****")
