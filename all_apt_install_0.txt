@@ -1,0 +1,6 @@
+Souhait=inconnU/Installé/suppRimé/Purgé/H=à garder
+| État=Non/Installé/fichier-Config/dépaqUeté/échec-conFig/H=semi-installé/W=attend-traitement-déclenchements
+|/ Err?=(aucune)/besoin Réinstallation (État,Err: majuscule=mauvais)
+||/ Nom            Version      Architecture Description
++++-==============-============-============-=================================================================
+ii  python         2.7.15~rc1-1 amd64        interactive high-level object-oriented language (default version)
