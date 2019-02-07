@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/pilt/Documents/entrainement/python/api_sql/venv"
+VIRTUAL_ENV="/home/pierre/Documents/entrainement/python/api_sql/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
