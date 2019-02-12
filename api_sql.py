@@ -1,13 +1,19 @@
 #####################################################################################
 ########################### USE OF THE API OPEN FOOD ACTS ###########################
+###########################  LOCALHOST AND SQL REQUESTS   ###########################
 #####################################################################################
+
 
 from classes.bd import Database
 from classes.glob import Glob
 from classes.api import API
 
+
 question = "****\n****\n****\n1. Quel aliment souhaitez vous remplacer?\n2. Retrouver mes aliments substitués.\n"
 selection = "****\nSélectionnez la catégorie\n****"
+question2="             Que voulez vous faire?"
+
+
 
 if __name__ == '__main__':
     def __main__():
@@ -20,7 +26,7 @@ if __name__ == '__main__':
 
 # Initial user choice
             print(question)
-            user_choice = input("             Que voulez vous faire?")
+            user_choice = input(question2)
             if user_choice == "1":
                 user_choice_0 = True
                 while user_choice_0:
@@ -35,7 +41,7 @@ if __name__ == '__main__':
                         for row in records:            # => chaque champ dans l'enreg.
                             print("Tapez {} pour {}".format(row[0],row[1])),
 
-                    user_choice_0 = input("             Quel catégorie choisissez vous?") 
+                    user_choice_0 = input(question2) 
                     test = user_choice_0
                     try:
                         user_choice_0 = int(user_choice_0)
@@ -51,10 +57,10 @@ if __name__ == '__main__':
 
 
                     if bd.executer_req(requete):
-                    # analyser le résultat de la requête ci-dessus :
-                        records = bd.resultat_req_one()      # ce sera un tuple de tuples
+                        records = bd.resultat_req_one()
                         url = records[0]
                     
+# affichage du résultat a la question a l'API
                     content = API(url)
                     content.description()
                     bd.close()         

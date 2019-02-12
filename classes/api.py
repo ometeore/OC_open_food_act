@@ -5,12 +5,16 @@ class API:
 
     def __init__(self, url):
         "Établissement de la connexion - Création du curseur"
-        parameters = {'json': '1'}
-        self.result = requests.get(url , params=parameters )
+        self.encoded = requests.get(url)
+        self.decoded = self.encoded.json()
+        self.url = url
 
-    def descriptif (self):
-        data=content.result.json()
-        t=data['products']
-        print(t)
-        with open('data.json') as json_data:
-            print(type(json_data))
+    def description (self):
+                    # v-- JSON
+        print(self.url)
+        print(self.decoded)  
+        #print(self.decoded['products']['product_name'])
+        #print(self.decoded[products])
+        #print(self.decoded[products][nutrient_levels])
+        #for key, value in self.decoded['products'].iteritems():
+            #print (key, value)
