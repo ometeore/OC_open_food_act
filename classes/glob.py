@@ -20,5 +20,3 @@ class Glob:
                             ('lieu3', "i", "lieu")]}
 
 
-question = "****\n****\n****\n1. Quel aliment souhaitez vous remplacer?\n2. Retrouver mes aliments substitués.\n"
-selection = "****\nSélectionnez la catégorie\n****"
