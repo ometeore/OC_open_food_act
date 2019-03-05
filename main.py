@@ -39,14 +39,10 @@ if __name__ == '__main__':
                 user_categori_choice = True
                 while user_categori_choice:
                     categori_choice = Text_control(
-                        [
-                            (1,"flageollets"),
-                            (2,"guimauves"),
-                            (3,"chantilly"),
-                            (4,"carbonnades flamandes")
-                        ],
+                        bd.print_the_categori(),
                         "\n\n\n****\nSélectionnez la catégorie\n****"
                     )
+                    bd.print_the_categori()
                     user_categori_choice = categori_choice.question()
                     #user can choose what he want to do with an aliment
                     user_aliment_choice = True
@@ -59,9 +55,30 @@ if __name__ == '__main__':
 
                         user_aliment_choice = aliment_choice.question()
 
-                        aliment = Product(bd,user_aliment_choice)
-                        aliment.hydrate_aliment()
-                        aliment.presentation()
+                        user_choose_what_to_do_with_aliment = True
+                        while user_choose_what_to_do_with_aliment:
+                            what_to_do = Text_control(
+                                [
+                                    (1,"obtenir une présentation de l'aliment"),
+                                    (2,"substituer l'aliment"),
+                                    (3,"revenir au menu principal")
+                                ],
+                                "\n\n\nQue souhaitez vous faire?"
+                            )
+                            result = what_to_do.question()
+                            if result == 1:
+                                aliment = Product(bd,user_aliment_choice)
+                                aliment.hydrate_aliment()
+                                aliment.presentation()
+                            if result == 2:
+                                aliment = Product(bd,user_aliment_choice)
+                                aliment.hydrate_aliment()
+                                bd.substitute_aliment(aliment)
+                            if result == 3:
+                                user_choose_what_to_do_with_aliment = False
+                                user_aliment_choice = False
+                                user_categori_choice = False
+
 
 
 

@@ -39,13 +39,13 @@ class Database:
         self.executer_req("SELECT * FROM OCOFF_categories")
         # analyser le résultat de la requête ci-dessus :
         records = self.resultat_req_all()      # ce sera un tuple de tuples
-
-        #construction d'une liste de categorie en fonction de ce qui trouver dans la base
-        for row in records:            # => chaque champ dans l'enreg.
-            print("Tapez {} pour {}".format(row[0],row[1]))
-        print("***\n")
-
-
+        char = []
+        for record in records:
+            morceau = []
+            morceau.append(record[0])
+            morceau.append(record[1])
+            char.append(morceau)
+        return char
 
     def print_list_aliment(self, categorie):
         requete = "SELECT * FROM OCOFF_aliments WHERE categorie = {}".format(categorie)
@@ -60,7 +60,11 @@ class Database:
         return char
     
     def substitute_aliment(self, aliment):
-        pass
+        requete = "SELECT * FROM OCOFF_aliments WHERE categorie = {}".format(aliment.categorie)
+        self.executer_req(requete)
+        aliments_substituables = self.resultat_req_all()
+        print (aliments_substituables)
+
 
 
 
