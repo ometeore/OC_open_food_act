@@ -17,7 +17,7 @@ from classes.validateur_de_texte import Text_control
 if __name__ == '__main__':
     def __main__():
         """Hello world"""
-        
+
         # Creation of the object wich connect to database : 
         bd = Database(Glob.dbName, Glob.user, Glob.passwd, Glob.host)
         
@@ -61,7 +61,9 @@ if __name__ == '__main__':
                                 [
                                     (1,"obtenir une présentation de l'aliment"),
                                     (2,"substituer l'aliment"),
-                                    (3,"revenir au menu principal")
+                                    (3,"Revenir au choix des aliments"),
+                                    (4,"revenir au choix des catégories"),
+                                    (5,"revenir au menu principal")
                                 ],
                                 "\n\n\nQue souhaitez vous faire?"
                             )
@@ -73,8 +75,42 @@ if __name__ == '__main__':
                             if result == 2:
                                 aliment = Product(bd,user_aliment_choice)
                                 aliment.hydrate_aliment()
-                                bd.substitute_aliment(aliment)
-                            if result == 3:
+                                aliment_good =Product(bd, bd.substitute_aliment(aliment))
+                                aliment_good.hydrate_aliment()
+                                bd.presentation_substitution(aliment, aliment_good)
+
+                                user_save_choice = True
+                                while user_save_choice:
+                                    save_or_not = Text_control(
+                                        [
+                                            (1,"sauvegarder la substitution en base de donnée"),
+                                            (2,"revenir au menu principal")
+                                        ],
+                                        "\n\n\n Que souhaitez vous faire?"
+                                    )
+                                    save = save_or_not.question()
+                                    if save == 1:
+                                        pass
+                                    else:
+                                        user_save_choice = False
+                                        user_choose_what_to_do_with_aliment = False
+                                        user_aliment_choice = False
+                                        user_categori_choice = False
+
+
+
+
+
+
+
+
+
+                            if result == 3: 
+                                user_choose_what_to_do_with_aliment = False
+                            if result == 4:
+                                user_choose_what_to_do_with_aliment = False
+                                user_aliment_choice = False
+                            if result == 5:
                                 user_choose_what_to_do_with_aliment = False
                                 user_aliment_choice = False
                                 user_categori_choice = False

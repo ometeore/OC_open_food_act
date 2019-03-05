@@ -62,12 +62,18 @@ class Database:
     def substitute_aliment(self, aliment):
         requete = "SELECT * FROM OCOFF_aliments WHERE categorie = {}".format(aliment.categorie)
         self.executer_req(requete)
+        result = 0
         aliments_substituables = self.resultat_req_all()
-        print (aliments_substituables)
+        for aliments in aliments_substituables:
+            if aliment.grade > aliments[2]:
+                result = aliments[0]
+        return result
 
-
-
-
+    def presentation_substitution(self, aliment_bad, aliment_good):
+        print("\n\nnous vous proposons de remplacer:")
+        aliment_bad.presentation()
+        print("\n\npar:")
+        aliment_good.presentation()
 
 
 
