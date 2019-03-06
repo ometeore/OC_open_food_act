@@ -27,10 +27,10 @@ if __name__ == '__main__':
             # Initial user choice select replacement of aliments already replace or choice of a new aliment
             initial_choice = Text_control(
                 [
-                    (1, "Trouver un aliment"),
-                    (2, "Retrouver mes aliments substitués.")
+                    (1, 1, "Trouver un aliment"),
+                    (2, 2, "Retrouver mes aliments substitués.")
                 ],
-                "Bonjour"
+                "\n\n\nPret à commencer?"
             )
             user_initial_choice = initial_choice.question()
             if user_initial_choice == 1:
@@ -42,14 +42,19 @@ if __name__ == '__main__':
                         bd.print_the_categori(),
                         "\n\n\n****\nSélectionnez la catégorie\n****"
                     )
-                    bd.print_the_categori()
+
+
                     user_categori_choice = categori_choice.question()
+
+
+                    #content = API("https://fr.openfoodfacts.org/categorie/volailles/cgi/search.pl?json=1", user_categori_choice)
+                    #content.description()
                     #user can choose what he want to do with an aliment
                     user_aliment_choice = True
                     while user_aliment_choice:
                         aliment_choice = Text_control(
                             bd.print_list_aliment(user_categori_choice),
-                            "\n\n\n\nQuel aliment choisissez vous?"
+                            "\n\n\nQuel aliment choisissez vous?"
                         )
 
 
@@ -59,11 +64,11 @@ if __name__ == '__main__':
                         while user_choose_what_to_do_with_aliment:
                             what_to_do = Text_control(
                                 [
-                                    (1, "obtenir une présentation de l'aliment"),
-                                    (2, "substituer l'aliment"),
-                                    (3, "Revenir au choix des aliments"),
-                                    (4, "revenir au choix des catégories"),
-                                    (5, "revenir au menu principal")
+                                    (1, 1, "0btenir une présentation de l'aliment"),
+                                    (2, 2,"Substituer l'aliment"),
+                                    (3, 3, "Revenir au choix des aliments"),
+                                    (4, 4,"Revenir au choix des catégories"),
+                                    (5, 5,"Revenir au menu principal")
                                 ],
                                 "\n\n\nQue souhaitez vous faire?"
                             )
@@ -83,10 +88,10 @@ if __name__ == '__main__':
                                 while user_save_choice:
                                     save_or_not = Text_control(
                                         [
-                                            (1, "sauvegarder la substitution en base de donnée"),
-                                            (2, "revenir au menu principal")
+                                            (1, 1, "sauvegarder la substitution en base de donnée"),
+                                            (2, 2, "revenir au menu principal")
                                         ],
-                                        "\n\n\n Que souhaitez vous faire?"
+                                        "\n\n\nQue souhaitez vous faire?"
                                     )
                                     save = save_or_not.question()
                                     if save == 1:
@@ -118,21 +123,23 @@ if __name__ == '__main__':
 
 
 # print the result of the API research
-                    #content = API(url, user_categori_choice)
-                    #content.description()
+                #content = API(url, user_categori_choice)
+                #content.description()
 
 
             else:
             # find product already substitute
                 block=[]
                 block = bd.presentation_of_substitute()
-                print(block)
-                for substitution in block:
-                    aliment_bad = Product(bd, substitution[0])
-                    aliment_bad.hydrate_aliment()
-                    aliment_good = Product(bd, substitution[1])
-                    aliment_good.hydrate_aliment()
-                    bd.presentation_substitution(aliment_bad, aliment_good)
+                if block == []:
+                    print("\n\n\nVous n'avez pas encore substituer d'aliments.")
+                else:
+                    for substitution in block:
+                        aliment_bad = Product(bd, substitution[0])
+                        aliment_bad.hydrate_aliment()
+                        aliment_good = Product(bd, substitution[1])
+                        aliment_good.hydrate_aliment()
+                        bd.presentation_substitution(aliment_bad, aliment_good)
 
         bd.close()
 

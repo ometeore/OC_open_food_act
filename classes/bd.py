@@ -40,11 +40,14 @@ class Database:
         # analyser le résultat de la requête ci-dessus :
         records = self.resultat_req_all()      # ce sera un tuple de tuples
         char = []
+        i = 1
         for record in records:
             morceau = []
+            morceau.append(i)
             morceau.append(record[0])
             morceau.append(record[1])
             char.append(morceau)
+            i = i + 1
         return char
 
     def print_list_aliment(self, categorie):
@@ -53,12 +56,16 @@ class Database:
         self.executer_req(requete)
         records = self.resultat_req_all()
         char = []
+        i = 1
         for record in records:
             morceau = []
+            morceau.append(i)
             morceau.append(record[0])
             morceau.append(record[1])
             char.append(morceau)
+            i = i + 1
         return char
+
 
     def substitute_aliment(self, aliment):
         """ va chercher un aliment de meilleur capacité nutritionelle de même catégorie"""
@@ -96,6 +103,7 @@ class Database:
             print("\n\n\nl'aliment à déjà été substitué.  Allez voir dans mes alliments substitués dans la base de donnée")
 
     def presentation_of_substitute(self):
+        """ retourne une liste de liste [[element mauvais, bon element], ...]"""
         self.executer_req("SELECT * FROM OCOFF_substitution")
         # analyser le résultat de la requête ci-dessus :
         records = self.resultat_req_all()      # ce sera un tuple de tuples

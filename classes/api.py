@@ -26,15 +26,21 @@ class API:
         #for cle in self.encoded['products'][0].keys():
         #    print (cle)
         for product in products:
-            name_of_product.append(product['product_name_fr'])  #<-- list de nom des produits
+            try:
+                name_of_product.append(product['product_name_fr'])  #<-- list de nom des produits
+            except:
+                name_of_product.append("NOOOOOOOON")
             nutrition_grade_of_product.append(product['nutrition_grades_tags'][0])
-            location_of_product.append(product['stores'])
+            try:
+                location_of_product.append(product['stores'])
+            except:
+                location_of_product.append("non disponible")
             url_of_product.append(product['url'])
 
 
 
         i = 0
-        j = 14
+        j = 62
         for name in name_of_product:
             list_of_request.append("INSERT INTO OCOFF_aliments VALUES ('{}','{}', '{}', '{}', 'vide pour le moment', '{}', '{}')".format(j, name, nutrition_grade_of_product[i], self.id_categorie, location_of_product[i], url_of_product[i]))
             i = i + 1
