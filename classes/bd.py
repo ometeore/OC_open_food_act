@@ -96,4 +96,13 @@ class Database:
             print("\n\n\nl'aliment à déjà été substitué.  Allez voir dans mes alliments substitués dans la base de donnée")
 
     def presentation_of_substitute(self):
-        pass
+        self.executer_req("SELECT * FROM OCOFF_substitution")
+        # analyser le résultat de la requête ci-dessus :
+        records = self.resultat_req_all()      # ce sera un tuple de tuples
+        char = []
+        for record in records:
+            morceau = []
+            morceau.append(record[0])
+            morceau.append(record[1])
+            char.append(morceau)
+        return char

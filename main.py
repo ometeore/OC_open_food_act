@@ -121,12 +121,19 @@ if __name__ == '__main__':
                     #content = API(url, user_categori_choice)
                     #content.description()
 
-# creer une table specifique pour ca
 
             else:
-                print("****")
-                print("coucou maman :).")
-                print("****")
+            # find product already substitute
+                block=[]
+                block = bd.presentation_of_substitute()
+                print(block)
+                for substitution in block:
+                    aliment_bad = Product(bd, substitution[0])
+                    aliment_bad.hydrate_aliment()
+                    aliment_good = Product(bd, substitution[1])
+                    aliment_good.hydrate_aliment()
+                    bd.presentation_substitution(aliment_bad, aliment_good)
+
         bd.close()
 
 __main__()
