@@ -1,4 +1,5 @@
-import requests, json
+import json
+import requests
 from classes.bd import Database
 from classes.glob import Glob
 
@@ -13,7 +14,8 @@ class API:
 
 
 
-    def description (self):
+    def description(self):
+        """print request ready to apply"""
 
         products = self.encoded['products']     #<-- list
         name_of_product = []
@@ -34,17 +36,12 @@ class API:
         i = 0
         j = 14
         for name in name_of_product:
-            list_of_request.append("INSERT INTO OCOFF_aliments VALUES ('{}','{}', '{}', '{}', 'vide pour le moment', '{}', '{}')".format(j, name, nutrition_grade_of_product[i], self.id_categorie, location_of_product[i], url_of_product[i]) )
+            list_of_request.append("INSERT INTO OCOFF_aliments VALUES ('{}','{}', '{}', '{}', 'vide pour le moment', '{}', '{}')".format(j, name, nutrition_grade_of_product[i], self.id_categorie, location_of_product[i], url_of_product[i]))
             i = i + 1
-            j= j+1
-        
-        bd = Database(Glob.dbName, Glob.user, Glob.passwd, Glob.host)       
+            j = j+1
+
+        bd = Database(Glob.dbName, Glob.user, Glob.passwd, Glob.host)
         for requete in list_of_request:
             print(requete)
-        
-        bd.close()
-        
-        
-        
-        
 
+        bd.close()

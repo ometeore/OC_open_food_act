@@ -4,7 +4,7 @@
 class Product:
     """Récupération et utilisation d'une catégorie"""
 
-    def __init__(self,db ,id=0, name="", grade="", categorie="", description="",location="", url=""):
+    def __init__(self, db, id=0, name="", grade="", categorie="", description="", location="", url=""):
         self.db = db
         self.id = id
         self.name = name
@@ -16,12 +16,14 @@ class Product:
 
 
     def presentation(self):
+        """print les informations disponnnibles sur un aliment"""
         print("\n****\nname: {},\nnutritional grade: {},\ndescription: {},\npoint de vente: {},\nurl: {}\n****\n".format(self.name, self.grade, self.description, self.location, self.url))
 
-    
+
 
 
     def hydrate_aliment(self):
+        """rempli les informations présente en bdd grace a l'id d'un aliment"""
         #liste pour hydrater aliment ------ id, name, grade, categorie, description,location, url
         requete = "SELECT * FROM OCOFF_aliments WHERE id_aliment = {}".format(self.id)
         self.db.executer_req(requete)
@@ -32,6 +34,3 @@ class Product:
         self.description = records[4]
         self.location = records[5]
         self.url = records[6]
-        
-        
-
