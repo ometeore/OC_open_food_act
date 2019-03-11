@@ -11,7 +11,7 @@ from classes.product import Product
 from classes.validateur_de_texte import Text_control
 
 
-
+#transformer __main___ par main
 
 
 if __name__ == '__main__':
@@ -46,10 +46,15 @@ if __name__ == '__main__':
 
                     user_categori_choice = categori_choice.question()
 
+###########################################################################################################
+############################ those linescan be use to feed the database####################################
+###########################################################################################################
 
                     #content = API("https://fr.openfoodfacts.org/categorie/volailles/cgi/search.pl?json=1", user_categori_choice)
                     #content.description()
                     #user can choose what he want to do with an aliment
+
+                    
                     user_aliment_choice = True
                     while user_aliment_choice:
                         aliment_choice = Text_control(
@@ -65,7 +70,7 @@ if __name__ == '__main__':
                             what_to_do = Text_control(
                                 [
                                     (1, 1, "0btenir une présentation de l'aliment"),
-                                    (2, 2,"Substituer l'aliment"),
+                                    (2, 2, "Substituer l'aliment"),
                                     (3, 3, "Revenir au choix des aliments"),
                                     (4, 4,"Revenir au choix des catégories"),
                                     (5, 5,"Revenir au menu principal")
@@ -116,15 +121,6 @@ if __name__ == '__main__':
                                 user_choose_what_to_do_with_aliment = False
                                 user_aliment_choice = False
                                 user_categori_choice = False
-
-
-
-
-
-
-# print the result of the API research
-                #content = API(url, user_categori_choice)
-                #content.description()
 
 
             else:
