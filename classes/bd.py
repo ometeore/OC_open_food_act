@@ -1,6 +1,8 @@
 import MySQLdb
 from glob import *
 from classes.product import Product
+from classes.validateur_de_texte import Text_control
+from classes.glob import Glob
 
 class Database:
     """Mise en place et interfaçage d'une base de données MySQL"""
@@ -114,3 +116,37 @@ class Database:
             morceau.append(record[1])
             char.append(morceau)
         return char
+
+    def print_the_substitution(self):
+        """affiche les substitutions"""
+        block=[]
+        block = self.presentation_of_substitute()
+        if block == []:
+            print("\n\n\nVous n'avez pas encore substituer d'aliments.")
+        else:
+            for substitution in block:
+                aliment_bad = Product(self, substitution[0])
+                aliment_bad.hydrate_aliment()
+                aliment_good = Product(self, substitution[1])
+                aliment_good.hydrate_aliment()
+                self.presentation_substitution(aliment_bad, aliment_good)
+    
+    def the_save_choice_scenario(self, user_aliment_choice):
+
+        aliment = Product(self, user_aliment_choice)
+        aliment.hydrate_aliment()
+        aliment_good = Product(self, self.substitute_aliment(aliment))
+        aliment_good.hydrate_aliment()
+        self.presentation_substitution(aliment, aliment_good)
+
+        user_save_choice = True
+        # user is in save choice menu
+        while user_save_choice:
+            save_or_not = Text_control(Glob.question_save, Glob.question_save_phrase)
+            save = save_or_not.question()
+            if save == 1:
+                self.save_substitute(aliment.id, aliment_good.id)
+                user_save_choice = False
+
+            else:
+                user_save_choice = False

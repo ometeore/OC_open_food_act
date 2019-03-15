@@ -15,7 +15,7 @@ class API:
 
 
     def description(self):
-        """print request ready to apply"""
+        """return list of request ready to apply"""
 
         products = self.encoded['products']     #<-- list
         name_of_product = []
@@ -23,31 +23,24 @@ class API:
         location_of_product = []
         url_of_product = []
         list_of_request = []
-        #for cle in self.encoded['products'][0].keys():
-        #    print (cle)
+
         for product in products:
             try:
                 name_of_product.append(product['product_name_fr'])  #<-- list de nom des produits
             except:
                 name_of_product.append("NOOOOOOOON")
-            nutrition_grade_of_product.append(product['nutrition_grades_tags'][0])
             try:
                 location_of_product.append(product['stores'])
             except:
                 location_of_product.append("non disponible")
             url_of_product.append(product['url'])
-
-
-
+            nutrition_grade_of_product.append(product['nutrition_grades_tags'][0])
         i = 0
-        j = 62
+        id_of_aliment = 62
         for name in name_of_product:
             list_of_request.append("INSERT INTO OCOFF_aliments VALUES ('{}','{}', '{}', '{}', 'vide pour le moment', '{}', '{}')".format(j, name, nutrition_grade_of_product[i], self.id_categorie, location_of_product[i], url_of_product[i]))
             i = i + 1
             j = j+1
 
-        bd = Database(Glob.dbName, Glob.user, Glob.passwd, Glob.host)
-        for requete in list_of_request:
-            print(requete)
+        return list_of_request
 
-        bd.close()

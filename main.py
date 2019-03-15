@@ -3,114 +3,52 @@
 ###########################  LOCALHOST AND SQL REQUESTS   ###########################
 #####################################################################################
 
-
-from classes.bd import Database
 from classes.glob import Glob
+from classes.bd import Database
 from classes.api import API
 from classes.product import Product
 from classes.validateur_de_texte import Text_control
 
 
-#transformer __main___ par main
-
-
 if __name__ == '__main__':
-    def __main__():
+    def main():
         """Hello world"""
 
-        # Creation of the object wich connect to database :
         bd = Database(Glob.dbName, Glob.user, Glob.passwd, Glob.host)
-
         user_initial_choice = True
+        
+        # Initial user choice select replacement of aliments already replace or choice of a new aliment
         while user_initial_choice:
-
-            # Initial user choice select replacement of aliments already replace or choice of a new aliment
-            initial_choice = Text_control(
-                [
-                    (1, 1, "Trouver un aliment"),
-                    (2, 2, "Retrouver mes aliments substitués.")
-                ],
-                "\n\n\nPret à commencer?"
-            )
+            Glob.question_initiale
+            initial_choice = Text_control(Glob. question_initiale, Glob.question_initiale_phrase)
             user_initial_choice = initial_choice.question()
+            
             if user_initial_choice == 1:
 
                 # user is in categori choice
                 user_categori_choice = True
                 while user_categori_choice:
-                    categori_choice = Text_control(
-                        bd.print_the_categori(),
-                        "\n\n\n****\nSélectionnez la catégorie\n****"
-                    )
-
-
-                    user_categori_choice = categori_choice.question()
-
-###########################################################################################################
-############################ those linescan be use to feed the database####################################
-###########################################################################################################
-
-                    #content = API("https://fr.openfoodfacts.org/categorie/volailles/cgi/search.pl?json=1", user_categori_choice)
-                    #content.description()
-                    #user can choose what he want to do with an aliment
-
-                    
+                    categori_choice = Text_control(bd.print_the_categori(), "\n\n\n****\nSélectionnez la catégorie\n****")
+                    user_categori_choice = categori_choice.question()      
                     user_aliment_choice = True
+                    
+                    # user is in aliment choice menu
                     while user_aliment_choice:
-                        aliment_choice = Text_control(
-                            bd.print_list_aliment(user_categori_choice),
-                            "\n\n\nQuel aliment choisissez vous?"
-                        )
-
-
+                        aliment_choice = Text_control(bd.print_list_aliment(user_categori_choice),"\n\n\nQuel aliment choisissez vous?")
                         user_aliment_choice = aliment_choice.question()
-
                         user_choose_what_to_do_with_aliment = True
+                        
+                        # user choose what to do with aliment
                         while user_choose_what_to_do_with_aliment:
-                            what_to_do = Text_control(
-                                [
-                                    (1, 1, "0btenir une présentation de l'aliment"),
-                                    (2, 2, "Substituer l'aliment"),
-                                    (3, 3, "Revenir au choix des aliments"),
-                                    (4, 4,"Revenir au choix des catégories"),
-                                    (5, 5,"Revenir au menu principal")
-                                ],
-                                "\n\n\nQue souhaitez vous faire?"
-                            )
+                            what_to_do = Text_control(Glob.question_menu_aliment, Glob.question_menu_aliment_phrase)
                             result = what_to_do.question()
                             if result == 1:
                                 aliment = Product(bd, user_aliment_choice)
                                 aliment.hydrate_aliment()
                                 aliment.presentation()
                             if result == 2:
-                                aliment = Product(bd, user_aliment_choice)
-                                aliment.hydrate_aliment()
-                                aliment_good = Product(bd, bd.substitute_aliment(aliment))
-                                aliment_good.hydrate_aliment()
-                                bd.presentation_substitution(aliment, aliment_good)
-
-                                user_save_choice = True
-                                while user_save_choice:
-                                    save_or_not = Text_control(
-                                        [
-                                            (1, 1, "sauvegarder la substitution en base de donnée"),
-                                            (2, 2, "revenir au menu principal")
-                                        ],
-                                        "\n\n\nQue souhaitez vous faire?"
-                                    )
-                                    save = save_or_not.question()
-                                    if save == 1:
-                                        bd.save_substitute(aliment.id, aliment_good.id)
-                                        user_save_choice = False
-                                        user_choose_what_to_do_with_aliment = False
-                                        user_aliment_choice = False
-                                        user_categori_choice = False
-                                    else:
-                                        user_save_choice = False
-                                        user_choose_what_to_do_with_aliment = False
-                                        user_aliment_choice = False
-                                        user_categori_choice = False
-
+                                bd.the_save_choice_scenario(user_aliment_choice)
+                                [user_choose_what_to_do_with_aliment,user_aliment_choice, user_categori_choice] = [False, False, False]
 
                             if result == 3:
                                 user_choose_what_to_do_with_aliment = False
@@ -122,21 +60,10 @@ if __name__ == '__main__':
                                 user_aliment_choice = False
                                 user_categori_choice = False
 
-
             else:
-            # find product already substitute
-                block=[]
-                block = bd.presentation_of_substitute()
-                if block == []:
-                    print("\n\n\nVous n'avez pas encore substituer d'aliments.")
-                else:
-                    for substitution in block:
-                        aliment_bad = Product(bd, substitution[0])
-                        aliment_bad.hydrate_aliment()
-                        aliment_good = Product(bd, substitution[1])
-                        aliment_good.hydrate_aliment()
-                        bd.presentation_substitution(aliment_bad, aliment_good)
+            # find product already substitute and print them
+                bd.print_the_substitution()
 
         bd.close()
 
-__main__()
+main()

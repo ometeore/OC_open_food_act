@@ -1,4 +1,3 @@
-
 class Text_control:
     """Mise en place et interfaçage d'une base de données MySQL"""
     def __init__(self, data_group, chaine):
@@ -18,7 +17,6 @@ class Text_control:
         user_wrong_answer = True
         while user_wrong_answer:
             question = input("")
-            
             try:
                 question = int(question)
                 for element in self.data:
@@ -28,11 +26,11 @@ class Text_control:
                 if user_wrong_answer:
                     print("not in list")
                  
-            except: 
+            except:
                 if question == "X":
                     return None
-
                 print("fail")
+               
         return reponse
         
 
