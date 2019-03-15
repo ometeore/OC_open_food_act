@@ -150,3 +150,23 @@ class Database:
 
             else:
                 user_save_choice = False
+
+    def what_to_do_with_aliment_choice(self, user_aliment_choice):
+        user_choose_what_to_do_with_aliment = True
+        while user_choose_what_to_do_with_aliment:
+            what_to_do = Text_control(Glob.question_menu_aliment, Glob.question_menu_aliment_phrase)
+            result = what_to_do.question()
+            if result == 1:
+                aliment = Product(self, user_aliment_choice)
+                aliment.hydrate_aliment()
+                aliment.presentation()
+            if result == 2:
+                self.the_save_choice_scenario(user_aliment_choice)
+                [user_choose_what_to_do_with_aliment,user_aliment_choice, user_categori_choice] = [False, False, False]
+
+            if result == 3:
+                user_choose_what_to_do_with_aliment = False
+            if result == 4:
+                [user_choose_what_to_do_with_aliment, user_aliment_choice] = [False, False]
+            if result == 5:
+                [user_choose_what_to_do_with_aliment, user_aliment_choice, user_categori_choice] = [False, False, False]

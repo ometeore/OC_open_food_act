@@ -22,7 +22,6 @@ if __name__ == '__main__':
             Glob.question_initiale
             initial_choice = Text_control(Glob. question_initiale, Glob.question_initiale_phrase)
             user_initial_choice = initial_choice.question()
-            
             if user_initial_choice == 1:
 
                 # user is in categori choice
@@ -35,30 +34,9 @@ if __name__ == '__main__':
                     # user is in aliment choice menu
                     while user_aliment_choice:
                         aliment_choice = Text_control(bd.print_list_aliment(user_categori_choice),"\n\n\nQuel aliment choisissez vous?")
-                        user_aliment_choice = aliment_choice.question()
-                        user_choose_what_to_do_with_aliment = True
-                        
-                        # user choose what to do with aliment
-                        while user_choose_what_to_do_with_aliment:
-                            what_to_do = Text_control(Glob.question_menu_aliment, Glob.question_menu_aliment_phrase)
-                            result = what_to_do.question()
-                            if result == 1:
-                                aliment = Product(bd, user_aliment_choice)
-                                aliment.hydrate_aliment()
-                                aliment.presentation()
-                            if result == 2:
-                                bd.the_save_choice_scenario(user_aliment_choice)
-                                [user_choose_what_to_do_with_aliment,user_aliment_choice, user_categori_choice] = [False, False, False]
-
-                            if result == 3:
-                                user_choose_what_to_do_with_aliment = False
-                            if result == 4:
-                                user_choose_what_to_do_with_aliment = False
-                                user_aliment_choice = False
-                            if result == 5:
-                                user_choose_what_to_do_with_aliment = False
-                                user_aliment_choice = False
-                                user_categori_choice = False
+                        user_aliment_choice = aliment_choice.question() 
+                        # user choose what to do with
+                        bd.what_to_do_with_aliment_choice(user_aliment_choice)
 
             else:
             # find product already substitute and print them
